@@ -1,9 +1,28 @@
 @import "tailwindcss";
 
-
+@theme {
+  --color-*: initial;
+  --color-primary: #C45B11;
+  --color-on_surface: "#AFAFAF"
+}
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Inter, Arial, sans-serif;
+}
+
+div, section, article, aside {
+  display: flex;
+}
+
+.bgc {
+  background: linear-gradient(283deg, rgba(107, 4, 166, 0.12) 0%, rgba(166, 4, 163, 0.15) 27.63%, rgba(107, 4, 166, 0.12) 55.26%, rgba(107, 4, 166, 0.00) 74.68%), radial-gradient(36.91% 23.13% at 0% -1.17%, rgba(107, 4, 166, 0.30) 0%, rgba(107, 4, 166, 0.15) 72.59%, rgba(107, 4, 166, 0.00) 100%), var(--bgc, #1A1A1A);
+}
+.header-bgc {
+  background: rgba(1, 1, 1, 0.32);
+}
+.card-bgc {
+  background: rgba(57, 57, 57, 0.75);
+  box-shadow: 4px -4px 8px 0px rgba(0, 0, 0, 0.25) inset, -4px 4px 8px 0px rgba(184, 169, 169, 0.25) inset;
 }

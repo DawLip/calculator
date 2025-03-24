@@ -1,5 +1,12 @@
 "use client"
+
+import React from "react";
 import { useState } from "react";
+
+import Header from "@/components/Header";
+import Card from "@/components/Card";
+
+
 function Input({value, callback, i, degree}){
   return (
     <>
@@ -7,15 +14,20 @@ function Input({value, callback, i, degree}){
         type="number" 
         value={value} 
         onChange={(e)=>callback(Number(e.target.value))} 
-        className="w-10 text-right"
+        className="w-16 text-right border-b"
       />
-      {i!=degree && <>x<sup>{[0,1,2,3].map((coeff, index)=>(coeff==i && degree-coeff))}</sup></>}
-      
+      {
+        i<degree 
+        && <>
+          x{
+            i<degree-1 
+            && <sup>{[0,1,2,3].map((coeff, index)=>(coeff==i && degree-coeff))}</sup>
+        }</>
+      }
     </>
 )
 }
-
-export default function Solver1() {
+export default function Home() {
   const [degree, setDegree] = useState(1);
   let roots = [];
 
@@ -67,24 +79,37 @@ export default function Solver1() {
   }
 
   return (
-    <section>
-      <h2>Rozwiąż równanie</h2>
-      {
-        [1,2,3].map(d=>(
-          <div key={"degree"+d}>
-            <input type="radio" name="degree" checked={degree==d} onChange={()=>setDegree(d)}/> 
-            <span>{d} stopnia</span>
-          </div>
-        ))
-      }
-      <section>
-      {inputs} = 0
-      </section>
-      <section>
-        Rozwiązanie:
-        {roots.map((x, index)=>(
-          <div key={"x"+index}>x{index+1}: {x}</div>
-        ))}
+    <section className="flex-col gap-8 min-h-screen bgc">
+      <Header />
+      <section className="gap-8 px-16">
+        <div className="flex-col gap-8 min-w-128">
+          <Card header="Degrees">
+            {
+              [1,2,3].map(d=>(
+                <div key={"degree"+d} className="gap-4">
+                  <input 
+                    type="radio" 
+                    name="degree" 
+                    id={"degree"+d}
+                    checked={degree==d} 
+                    onChange={()=>setDegree(d)}
+                  /> 
+                  <label htmlFor={"degree"+d}>{d} degree</label>
+                </div>
+              ))
+            }
+          </Card>
+          <Card header="Solutions">
+            {
+              roots.length > 0
+              ? roots.map((x, index)=>(<div key={"x"+index}>x{index+1}: {x}</div>))
+              : "No solutions"
+            }
+          </Card>
+        </div>
+        <Card header="Equations" fill>
+          <div>{inputs} = 0</div>
+        </Card>
       </section>
     </section>
   );
